@@ -1,5 +1,7 @@
 import matplotlib.pyplot as plt
 from sklearn import metrics
+import pandas as pd
+from datetime import datetime
 
 def plot_clusters(data, labels_pred, title='Clustering Visualization'):
     """
@@ -17,70 +19,44 @@ def plot_clusters(data, labels_pred, title='Clustering Visualization'):
     plt.show()
 
 
-def evaluate_clustering(X, labels_true, labels_pred, title='Clustering Evaluation'):
+def evaluate_clustering(X, labels_true, labels_pred, clustering_name, dataset_name, results_path):
     """
-    Evaluates the clustering performance using various metrics.
+    Evaluates the clustering performance using various metrics and saves the results to a CSV file.
 
     :param X: Feature set.
     :param labels_true: Ground truth labels.
     :param labels_pred: Predicted cluster labels.
-    :param title: Title for the evaluation printout.
+    :param clustering_name: Name of the clustering algorithm.
+    :param dataset_name: Name of the dataset.
+    :param results_path: Path to save the results CSV file.
     """
-    print(f"{title}\n" + "=" * len(title))
+    # Collecting metrics
+    results = {
+        'Timestamp': datetime.now(),
+        'Dataset': dataset_name,
+        'Clustering Algorithm': clustering_name,
+        'AMI': metrics.adjusted_mutual_info_score(labels_true, labels_pred),
+        'ARI': metrics.adjusted_rand_score(labels_true, labels_pred),
+        'Calinski-Harabasz Score': metrics.calinski_harabasz_score(X, labels_pred),
+        'Davies-Bouldin Score': metrics.davies_bouldin_score(X, labels_pred),
+        'Completeness Score': metrics.completeness_score(labels_true, labels_pred),
+        'Fowlkes-Mallows Score': metrics.fowlkes_mallows_score(labels_true, labels_pred),
+        'Homogeneity': metrics.homogeneity_score(labels_true, labels_pred),
+        'Completeness': metrics.completeness_score(labels_true, labels_pred),
+        'V-Measure': metrics.v_measure_score(labels_true, labels_pred),
+        'Mutual Information': metrics.mutual_info_score(labels_true, labels_pred),
+        'Normalized Mutual Information': metrics.normalized_mutual_info_score(labels_true, labels_pred),
+        'Rand Score': metrics.rand_score(labels_true, labels_pred),
+        'Silhouette Score': metrics.silhouette_score(X, labels_pred),
+    }
 
-    # Adjusted Mutual Information
-    ami = metrics.adjusted_mutual_info_score(labels_true, labels_pred)
-    print(f"Adjusted Mutual Information (AMI): {ami}")
+    # Print results
+    for key, value in results.items():
+        print(f"{key}: {value}")
 
-    # Adjusted Rand Index
-    ari = metrics.adjusted_rand_score(labels_true, labels_pred)
-    print(f"Adjusted Rand Index (ARI): {ari}")
-
-    # Calinski and Harabasz Score
-    chs = metrics.calinski_harabasz_score(X, labels_pred)
-    print(f"Calinski and Harabasz Score: {chs}")
-
-    # Davies-Bouldin Score
-    dbs = metrics.davies_bouldin_score(X, labels_pred)
-    print(f"Davies-Bouldin Score: {dbs}")
-
-    # Completeness Score
-    comp_score = metrics.completeness_score(labels_true, labels_pred)
-    print(f"Completeness Score: {comp_score}")
-
-    # Fowlkes-Mallows Score
-    fms = metrics.fowlkes_mallows_score(labels_true, labels_pred)
-    print(f"Fowlkes-Mallows Score: {fms}")
-
-    # Homogeneity, Completeness, V-Measure
-    homogeneity, completeness, v_measure = metrics.homogeneity_completeness_v_measure(labels_true, labels_pred)
-    print(f"Homogeneity: {homogeneity}, Completeness: {completeness}, V-Measure: {v_measure}")
-
-    # Homogeneity Score
-    homogeneity_score = metrics.homogeneity_score(labels_true, labels_pred)
-    print(f"Homogeneity Score: {homogeneity_score}")
-
-    # Mutual Information
-    mi = metrics.mutual_info_score(labels_true, labels_pred)
-    print(f"Mutual Information: {mi}")
-
-    # Normalized Mutual Information
-    nmi = metrics.normalized_mutual_info_score(labels_true, labels_pred)
-    print(f"Normalized Mutual Information: {nmi}")
-
-    # Rand Score
-    rand_score = metrics.rand_score(labels_true, labels_pred)
-    print(f"Rand Score: {rand_score}")
-
-    # Silhouette Score
-    silhouette = metrics.silhouette_score(X, labels_pred)
-    print(f"Silhouette Score: {silhouette}")
-
-    # V-Measure Score
-    v_measure_score = metrics.v_measure_score(labels_true, labels_pred)
-    print(f"V-Measure Score: {v_measure_score}")
-
-    print("\n" + "-" * 40 + "\n")
+    # Save to CSV
+    df = pd.DataFrame([results])
+    df.to_csv(results_path, mode='a', header=not pd.io.common.file_exists(results_path), index=False)
 
 
 def load_labels_from_file(file_path, labels_pred_len):
