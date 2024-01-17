@@ -83,7 +83,7 @@ def evaluate_clustering(X, labels_true, labels_pred, title='Clustering Evaluatio
     print("\n" + "-" * 40 + "\n")
 
 
-def load_labels_from_file(file_path):
+def load_labels_from_file(file_path, labels_pred_len):
     """
     Loads clustering labels from a text file, ignoring the header and metadata.
 
@@ -95,6 +95,9 @@ def load_labels_from_file(file_path):
 
     # Skipping the header and metadata, start reading from the line after '-----'
     start_index = lines.index('-------------------------------------\n') + 1
-    labels = [int(line.strip()) for line in lines[start_index:]]
+    labels_true = [int(line.strip()) for line in lines[start_index:]]
+    if labels_pred_len != len(labels_true):
+        raise ValueError(f"This is a custom error raised by the developer./ Please check the file {file_path} or labels "
+                         f"definition.")
 
-    return labels
+    return labels_true
