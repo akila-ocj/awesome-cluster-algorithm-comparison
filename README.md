@@ -3,10 +3,10 @@
 ## Overview
 This repository contains the implementation and analysis of various clustering algorithms. It's structured to facilitate exploratory data analysis, algorithm implementation, and evaluation in a clear, modular, and reproducible manner.
 
-Here are the identified clustering algorithms along with their corresponding implementations. The column 'Algorithm and Original Paper Name' includes the title of the original paper and the total number of citations it has received. For instance, the K-means algorithm was introduced in a paper titled 'Some methods for classification and analysis of multivariate observations,' which has accumulated 37,287 citations to date.
+This table presents a curated list of clustering algorithms, accompanied by their respective implementation libraries. Each entry specifies the original research paper title that introduced the algorithm, along with the total number of citations received as of January 31, 2024. This citation count serves as an indicator of the algorithm's impact and its recognition within the field. For instance, the influential K-means algorithm was originally introduced in the paper titled "Some methods for classification and analysis of multivariate observations," which has garnered 37,287 citations, evidencing its widespread adoption and foundational status in the realm of clustering analysis.
 <br>
 <br>
-| Rank | Algorithm | Original Paper Name | Cited By | isClusteringAlgorithm | Implementation |
+| Rank | Algorithm Name | Original Paper Name | Cited By | isClusteringAlgorithm | Implementation |
 |------|-----------|----------------------|----------|-----------------------|----------------|
 | 1    | k-means   | Some methods for classification and analysis of multivariate observations | 37287    | TRUE                  | sklearn.cluster.KMeans |
 | 2    | DBSCAN    | A density-based algorithm for discovering clusters in large spatial databases with noise | 30900    | TRUE                  | sklearn.cluster.DBSCAN |
