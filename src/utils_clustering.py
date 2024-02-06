@@ -108,6 +108,38 @@ def map_clusters_to_ground_truth_dbscan(labels_true, labels_pred):
 
     return remapped_labels_pred
 
+
+def map_clusters_to_ground_truth_optics(labels_true, labels_pred):
+    """
+        Adjusted mapping for OPTICS output to ground truth labels, excluding noise points.
+        """
+    # Ensure labels_true is a NumPy array for boolean indexing compatibility
+    labels_true = np.array(labels_true)
+    labels_pred = np.array(labels_pred)
+
+    # Exclude noise points from the mapping process
+    valid_indices = labels_pred != -1
+    labels_pred_filtered = labels_pred[valid_indices]
+    labels_true_filtered = labels_true[valid_indices]
+
+    # Ensure there are clusters other than noise to map
+    if len(np.unique(labels_pred_filtered)) < 2:
+        print("Warning: Not enough clusters for meaningful mapping.")
+        return labels_pred  # Return original predictions if not enough clusters
+
+    # Calculate the confusion matrix without noise points
+    cm = confusion_matrix(labels_true_filtered, labels_pred_filtered)
+    row_ind, col_ind = linear_sum_assignment(-cm)
+
+    # Initialize the remapped labels with noise points remaining as -1
+    remapped_labels_pred = np.full_like(labels_pred, fill_value=-1)
+
+    # Remap valid clusters
+    for original_cluster, new_label in zip(col_ind, row_ind):
+        remapped_labels_pred[labels_pred == original_cluster] = new_label
+
+    return remapped_labels_pred
+
 def generate_confusion_matrix(labels_true, labels_pred, n_classes):
     """
     Generates and prints the confusion matrix and accuracies for each cluster.
