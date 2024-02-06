@@ -4,6 +4,7 @@ import pandas as pd
 from datetime import datetime
 from sklearn.metrics import accuracy_score, confusion_matrix
 import seaborn as sns
+from scipy.optimize import linear_sum_assignment
 
 def plot_clusters(data, labels_pred, title='Clustering Visualization'):
     """
@@ -49,6 +50,29 @@ def evaluate_clustering(X, labels_true, labels_pred, clustering_name, dataset_na
     # Save to CSV
     df = pd.DataFrame([results])
     # df.to_csv(results_path, mode='a', header=not pd.io.common.file_exists(results_path), index=False)
+
+
+def map_clusters_to_ground_truth(labels_true, labels_pred):
+    """
+    Maps clustering algorithm output to ground truth labels using the Hungarian algorithm.
+
+    :param labels_true: Ground truth labels.
+    :param labels_pred: Predicted cluster labels.
+    :return: Remapped predicted labels.
+    """
+    # Calculate the confusion matrix
+    cm = confusion_matrix(labels_true, labels_pred)
+    # Apply the Hungarian algorithm to the negative confusion matrix for maximum matching
+    row_ind, col_ind = linear_sum_assignment(-cm)
+
+    # Create a new array to hold the remapped predicted labels
+    remapped_labels_pred = np.zeros_like(labels_pred)
+    # For each original cluster index, find the new label (according to the Hungarian algorithm)
+    # and assign it in the remapped labels array
+    for original_cluster, new_label in zip(col_ind, row_ind):
+        remapped_labels_pred[labels_pred == original_cluster] = new_label
+
+    return remapped_labels_pred
 
 def generate_confusion_matrix(labels_true, labels_pred, n_classes):
     """
