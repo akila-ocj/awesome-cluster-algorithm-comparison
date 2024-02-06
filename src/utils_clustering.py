@@ -1,8 +1,9 @@
 import matplotlib.pyplot as plt
-from sklearn import metrics
-import pandas as pd
 import numpy as np
+import pandas as pd
 from datetime import datetime
+from sklearn.metrics import accuracy_score, confusion_matrix
+import seaborn as sns
 
 def plot_clusters(data, labels_pred, title='Clustering Visualization'):
     """
@@ -31,33 +32,65 @@ def evaluate_clustering(X, labels_true, labels_pred, clustering_name, dataset_na
     :param dataset_name: Name of the dataset.
     :param results_path: Path to save the results CSV file.
     """
-    # Collecting metrics
     results = {
         'Timestamp': datetime.now(),
         'Dataset': dataset_name,
         'Clustering Algorithm': clustering_name,
-        'AMI': metrics.adjusted_mutual_info_score(labels_true, labels_pred),
-        'ARI': metrics.adjusted_rand_score(labels_true, labels_pred),
-        'Calinski-Harabasz Score': metrics.calinski_harabasz_score(X, labels_pred),
-        'Davies-Bouldin Score': metrics.davies_bouldin_score(X, labels_pred),
-        'Completeness Score': metrics.completeness_score(labels_true, labels_pred),
-        'Fowlkes-Mallows Score': metrics.fowlkes_mallows_score(labels_true, labels_pred),
-        'Homogeneity': metrics.homogeneity_score(labels_true, labels_pred),
-        'Completeness': metrics.completeness_score(labels_true, labels_pred),
-        'V-Measure': metrics.v_measure_score(labels_true, labels_pred),
-        'Mutual Information': metrics.mutual_info_score(labels_true, labels_pred),
-        'Normalized Mutual Information': metrics.normalized_mutual_info_score(labels_true, labels_pred),
-        'Rand Score': metrics.rand_score(labels_true, labels_pred),
-        'Silhouette Score': metrics.silhouette_score(X, labels_pred),
+        'Accuracy': accuracy_score(labels_true, labels_pred)
     }
 
     # Print results
     for key, value in results.items():
-        print(f"{key}: {value}")
+        if key == 'Confusion Matrix':
+            print(f"{key}:\n{value}")
+        else:
+            print(f"{key}: {value}")
 
     # Save to CSV
     df = pd.DataFrame([results])
-    df.to_csv(results_path, mode='a', header=not pd.io.common.file_exists(results_path), index=False)
+    # df.to_csv(results_path, mode='a', header=not pd.io.common.file_exists(results_path), index=False)
+
+def generate_confusion_matrix(labels_true, labels_pred, n_classes):
+    """
+    Generates and prints the confusion matrix and accuracies for each cluster.
+
+    :param labels_true: Ground truth labels.
+    :param labels_pred: Predicted cluster labels.
+    :param n_classes: Number of classes or clusters.
+    """
+    # Compute confusion matrix
+    cm = confusion_matrix(labels_true, labels_pred, labels=np.arange(n_classes))
+    np.set_printoptions(precision=2)
+
+    # Print confusion matrix
+    print("Confusion Matrix:")
+    plt.figure(figsize=(10, 7))
+    sns.heatmap(cm, annot=True, fmt="d", cmap="Blues")
+    plt.title("Confusion Matrix")
+    plt.xlabel("Predicted Label")
+    plt.ylabel("True Label")
+    plt.show()
+
+    # Compute accuracies for each cluster, safely handling division by zero
+    row_sums = np.sum(cm, axis=1)
+    safe_divisor = np.where(row_sums == 0, 1, row_sums)  # Avoid division by zero
+    cluster_accuracies = np.diagonal(cm) / safe_divisor
+
+    # Handling potential division by zero by replacing inf and NaN values with 0
+    cluster_accuracies = np.nan_to_num(cluster_accuracies)  # Replace NaN and inf with 0
+    print("Each cluster's accuracy indicates how well the clustering algorithm has grouped the data points,")
+    print("compared to the ground truth labels. Higher accuracy means a closer match to the expected grouping.\n")
+
+    # Print each cluster's accuracy
+    for i, accuracy in enumerate(cluster_accuracies, start=1):
+        print(f"Cluster {i} Accuracy: {accuracy * 100:.2f}%")
+
+
+    # Compute overall accuracy
+    overall_accuracy = accuracy_score(labels_true, labels_pred)
+    # Print overall accuracy
+    print(f"\nOverall Accuracy: {overall_accuracy * 100:.2f}%")
+    print("This represents the proportion of all data points that were correctly grouped by the clustering algorithm.")
 
 
 def load_labels_from_file(file_path, labels_pred_len):
@@ -78,48 +111,3 @@ def load_labels_from_file(file_path, labels_pred_len):
                          f"definition.")
 
     return labels_true
-
-
-# Function to visualize the biclusters
-def visualize_biclusters(data, row_labels, col_labels, title='Biclustering Visualization'):
-    sorted_data = data[np.argsort(row_labels), :]
-    sorted_data = sorted_data[:, np.argsort(col_labels)]
-
-    plt.figure(figsize=(12, 8))  # Increase figure size
-    plt.imshow(sorted_data, aspect='auto', cmap='viridis')
-    plt.colorbar()  # Add a color bar
-    plt.grid(False)  # Disable grid (set to True to enable)
-    plt.title(title)
-    plt.xlabel('Columns')
-    plt.ylabel('Rows')
-    plt.show()
-
-
-def evaluate_biclustering(data,  labels_true, bicluster, clustering_name, dataset_name,results_path):
-    """
-    Evaluates the biclustering performance using various metrics.
-
-    :param data: Feature set.
-    :param labels_true: Ground truth labels for traditional clustering metrics.
-    :param bicluster: Fitted biclustering object.
-    :param clustering_name: Name of the clustering algorithm.
-    :param dataset_name: Name of the dataset.
-    :param results_path: Path to save the results CSV file.
-    """
-    # Collecting metrics
-    results = {
-        'Timestamp': datetime.now(),
-        'Dataset': dataset_name,
-        'Clustering Algorithm': clustering_name,
-        'AMI': metrics.adjusted_mutual_info_score(labels_true, bicluster.row_labels_),
-        'Silhouette Score': metrics.silhouette_score(data, bicluster.row_labels_),
-        # 'Consensus Score': metrics.consensus_score(bicluster.biclusters_, bicluster.biclusters_),
-    }
-
-    # Print results
-    for key, value in results.items():
-        print(f"{key}: {value}")
-
-    # Save to CSV
-    df = pd.DataFrame([results])
-    df.to_csv(results_path, mode='a', header=not pd.io.common.file_exists(results_path), index=False)
