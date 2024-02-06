@@ -22,6 +22,43 @@ def plot_clusters(data, labels_pred, title='Clustering Visualization'):
     plt.ylabel('Feature 2')
     plt.show()
 
+def plot_clusters_fcm(data, labels_pred, centers, title='FCM Clustering Visualization'):
+    """
+    Function to plot the results of the FCM clustering algorithm.
+
+    :param data: List of data points, where each data point is a list [x, y].
+    :param labels_pred: Array-like, cluster labels for each point.
+    :param centers: List of cluster centers, where each center is a list [x, y].
+    :param title: string, title for the plot.
+    """
+    plt.figure(figsize=(10, 8))
+
+    # Convert data list to numpy array for easier indexing
+    data_np = np.array(data)
+
+    # Number of clusters
+    n_clusters = len(centers)
+
+    # Generate a color palette
+    colors = plt.cm.viridis(np.linspace(0, 1, n_clusters))
+
+    # Plot each cluster
+    for i, color in enumerate(colors):
+        # Indices of points in this cluster
+        idx = np.where(labels_pred == i)
+
+        # Plot points in this cluster
+        plt.scatter(data_np[idx, 0], data_np[idx, 1], s=30, color=color, label=f'Cluster {i + 1}')
+
+    # Plot centers
+    centers_np = np.array(centers)
+    plt.scatter(centers_np[:, 0], centers_np[:, 1], s=250, marker='*', c='red', label='Centers')
+
+    plt.title(title)
+    plt.xlabel('Feature 1')
+    plt.ylabel('Feature 2')
+    plt.legend()
+    plt.show()
 
 def evaluate_clustering(X, labels_true, labels_pred, clus_algo_name, dataset_name, results_path, algorithm_details, running_time):
     """
@@ -174,12 +211,12 @@ def generate_confusion_matrix(labels_true, labels_pred, n_classes):
 
     # Handling potential division by zero by replacing inf and NaN values with 0
     cluster_accuracies = np.nan_to_num(cluster_accuracies)  # Replace NaN and inf with 0
-    print("Each cluster's accuracy indicates how well the clustering algorithm has grouped the data points,")
-    print("compared to the ground truth labels. Higher accuracy means a closer match to the expected grouping.\n")
-
-    # Print each cluster's accuracy
-    for i, accuracy in enumerate(cluster_accuracies, start=1):
-        print(f"Cluster {i} Accuracy: {accuracy * 100:.2f}%")
+    # print("Each cluster's accuracy indicates how well the clustering algorithm has grouped the data points,")
+    # print("compared to the ground truth labels. Higher accuracy means a closer match to the expected grouping.\n")
+    #
+    # # Print each cluster's accuracy
+    # for i, accuracy in enumerate(cluster_accuracies, start=1):
+    #     print(f"Cluster {i} Accuracy: {accuracy * 100:.2f}%")
 
     # Compute overall accuracy
     overall_accuracy = accuracy_score(labels_true, labels_pred)
