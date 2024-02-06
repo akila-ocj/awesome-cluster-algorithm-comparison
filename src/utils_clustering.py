@@ -6,6 +6,7 @@ from sklearn.metrics import accuracy_score, confusion_matrix
 import seaborn as sns
 from scipy.optimize import linear_sum_assignment
 
+
 def plot_clusters(data, labels_pred, title='Clustering Visualization'):
     """
     Function to plot the results of a clustering algorithm.
@@ -74,6 +75,7 @@ def map_clusters_to_ground_truth(labels_true, labels_pred):
 
     return remapped_labels_pred
 
+
 def generate_confusion_matrix(labels_true, labels_pred, n_classes):
     """
     Generates and prints the confusion matrix and accuracies for each cluster.
@@ -82,8 +84,12 @@ def generate_confusion_matrix(labels_true, labels_pred, n_classes):
     :param labels_pred: Predicted cluster labels.
     :param n_classes: Number of classes or clusters.
     """
+
+    # Adjust the labels parameter to include the new range of labels
+    labels_range = list(range(1, n_classes + 1))  # Adjusted for 1-15
+
     # Compute confusion matrix
-    cm = confusion_matrix(labels_true, labels_pred, labels=np.arange(n_classes))
+    cm = confusion_matrix(labels_true, labels_pred, labels=labels_range)
     np.set_printoptions(precision=2)
 
     # Print confusion matrix
@@ -109,7 +115,6 @@ def generate_confusion_matrix(labels_true, labels_pred, n_classes):
     for i, accuracy in enumerate(cluster_accuracies, start=1):
         print(f"Cluster {i} Accuracy: {accuracy * 100:.2f}%")
 
-
     # Compute overall accuracy
     overall_accuracy = accuracy_score(labels_true, labels_pred)
     # Print overall accuracy
@@ -131,7 +136,8 @@ def load_labels_from_file(file_path, labels_pred_len):
     start_index = lines.index('-------------------------------------\n') + 1
     labels_true = [int(line.strip()) for line in lines[start_index:]]
     if labels_pred_len != len(labels_true):
-        raise ValueError(f"This is a custom error raised by the developer./ Please check the file {file_path} or labels "
-                         f"definition.")
+        raise ValueError(
+            f"This is a custom error raised by the developer./ Please check the file {file_path} or labels "
+            f"definition.")
 
     return labels_true
