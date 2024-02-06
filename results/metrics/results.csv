@@ -13,3 +13,9 @@ Timestamp,Dataset,Clustering Algorithm,Accuracy
 2024-02-06 23:43:45.344885,s1,Birch_clustering,0.07
 2024-02-06 23:44:49.250395,s1,Birch_clustering,0.8888
 2024-02-06 23:46:05.030305,s1,Birch_clustering,0.9944
+2024-02-07 00:10:44.450979,s1,AffinityPropagation_clustering,0.2532
+2024-02-07 00:18:34.731195,s1,AffinityPropagation_clustering,0.3484
+2024-02-07 00:33:10.977967,s1,AffinityPropagation_clustering,0.9936
+2024-02-07 00:33:47.586956,s1,AffinityPropagation_clustering,0.9496
+2024-02-07 00:34:40.558782,s1,AffinityPropagation_clustering,0.9936
+2024-02-07 00:36:05.183914,s1,AffinityPropagation_clustering,0.9936
