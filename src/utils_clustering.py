@@ -23,7 +23,7 @@ def plot_clusters(data, labels_pred, title='Clustering Visualization'):
     plt.show()
 
 
-def evaluate_clustering(X, labels_true, labels_pred, clus_algo_name, dataset_name, results_path):
+def evaluate_clustering(X, labels_true, labels_pred, clus_algo_name, dataset_name, results_path, algorithm_details, running_time):
     """
     Evaluates the clustering performance using various metrics and saves the results to a CSV file.
 
@@ -38,6 +38,8 @@ def evaluate_clustering(X, labels_true, labels_pred, clus_algo_name, dataset_nam
         'Timestamp': datetime.now(),
         'Dataset': dataset_name,
         'Clustering Algorithm': clus_algo_name,
+        'Algorithm Details': algorithm_details,
+        'Running Time (seconds)': running_time,
         'Accuracy': accuracy_score(labels_true, labels_pred)
     }
 
