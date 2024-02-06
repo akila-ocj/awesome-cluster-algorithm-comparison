@@ -4,3 +4,12 @@ Timestamp,Dataset,Clustering Algorithm,Accuracy
 2024-02-06 21:16:39.502048,s1,KMeans_clustering,0.9938
 2024-02-06 21:17:35.483983,s1,KMeans_clustering,0.9934
 2024-02-06 21:21:29.844691,s1,KMeans_clustering,0.9938
+2024-02-06 21:35:02.338858,s1,DBSCAN_clustering,0.0
+2024-02-06 21:41:40.156194,s1,DBSCAN_clustering,0.0
+2024-02-06 21:48:29.666728,s1,DBSCAN_clustering,0.0632
+2024-02-06 21:49:44.437281,s1,DBSCAN_clustering,0.135
+2024-02-06 23:16:06.483839,s1,DBSCAN_clustering,0.0
+2024-02-06 23:31:37.169712,s1,DBSCAN_clustering,0.602
+2024-02-06 23:43:45.344885,s1,Birch_clustering,0.07
+2024-02-06 23:44:49.250395,s1,Birch_clustering,0.8888
+2024-02-06 23:46:05.030305,s1,Birch_clustering,0.9944

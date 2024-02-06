@@ -10,6 +10,7 @@ This table presents a curated list of clustering algorithms, accompanied by thei
 |------|-----------|----------------------|----------|-----------------------|----------------|
 | 1    | k-means   | Some methods for classification and analysis of multivariate observations | 37287    | TRUE                  | sklearn.cluster.KMeans |
 | 2    | DBSCAN    | A density-based algorithm for discovering clusters in large spatial databases with noise | 30900    | TRUE                  | sklearn.cluster.DBSCAN |
+| 3    | Affinity Propagation    | Clustering by Passing Messages Between Data Points | 7886     | TRUE                  | sklearn.cluster.AffinityPropagation |
 | 3    | BIRCH     | an efficient data clustering method for very large databases | 7475     | TRUE                  | sklearn.cluster.Birch |
 | 4    | Fuzzy C Means | FCM: The fuzzy c-means clustering algorithm | 7462     | TRUE                  | pyclustering.cluster.fcm.fcm |
 | 5    | OPTICS    | OPTICS: Ordering points to identify the clustering structure | 6134     | TRUE                  | sklearn.cluster.OPTICS |

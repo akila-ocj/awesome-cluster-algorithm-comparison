@@ -76,6 +76,38 @@ def map_clusters_to_ground_truth(labels_true, labels_pred):
     return remapped_labels_pred
 
 
+def map_clusters_to_ground_truth_dbscan(labels_true, labels_pred):
+    """
+    Adjusted mapping for DBSCAN output to ground truth labels, excluding noise points.
+    """
+    # Ensure labels_true and labels_pred are numpy arrays for advanced indexing
+    labels_true = np.array(labels_true)
+    labels_pred = np.array(labels_pred)
+
+    # Filter out noise points (-1 labels) from labels_pred for mapping
+    valid_idx = labels_pred != -1
+    labels_pred_filtered = labels_pred[valid_idx]
+    labels_true_filtered = labels_true[valid_idx]
+
+    # Calculate the confusion matrix without noise points
+    cm = confusion_matrix(labels_true_filtered, labels_pred_filtered)
+    # Apply the Hungarian algorithm for optimal matching
+    row_ind, col_ind = linear_sum_assignment(-cm)
+
+    # Initialize remapped labels array with -1 for noise points
+    remapped_labels_pred = -1 * np.ones_like(labels_pred)
+    # Map valid clusters excluding noise
+    for original, new in zip(col_ind, row_ind):
+        # Find indices in the filtered prediction that match the original cluster
+        indices = np.where(labels_pred_filtered == original)[0]
+        # For each of these indices, update the corresponding entry in the full remapped prediction array
+        for idx in indices:
+            # Convert filtered index back to original index
+            original_idx = np.where(valid_idx)[0][idx]
+            remapped_labels_pred[original_idx] = new
+
+    return remapped_labels_pred
+
 def generate_confusion_matrix(labels_true, labels_pred, n_classes):
     """
     Generates and prints the confusion matrix and accuracies for each cluster.
