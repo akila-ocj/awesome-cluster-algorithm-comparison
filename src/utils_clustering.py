@@ -23,21 +23,21 @@ def plot_clusters(data, labels_pred, title='Clustering Visualization'):
     plt.show()
 
 
-def evaluate_clustering(X, labels_true, labels_pred, clustering_name, dataset_name, results_path):
+def evaluate_clustering(X, labels_true, labels_pred, clus_algo_name, dataset_name, results_path):
     """
     Evaluates the clustering performance using various metrics and saves the results to a CSV file.
 
     :param X: Feature set.
     :param labels_true: Ground truth labels.
     :param labels_pred: Predicted cluster labels.
-    :param clustering_name: Name of the clustering algorithm.
+    :param clus_algo_name: Name of the clustering algorithm.
     :param dataset_name: Name of the dataset.
     :param results_path: Path to save the results CSV file.
     """
     results = {
         'Timestamp': datetime.now(),
         'Dataset': dataset_name,
-        'Clustering Algorithm': clustering_name,
+        'Clustering Algorithm': clus_algo_name,
         'Accuracy': accuracy_score(labels_true, labels_pred)
     }
 
@@ -50,7 +50,7 @@ def evaluate_clustering(X, labels_true, labels_pred, clustering_name, dataset_na
 
     # Save to CSV
     df = pd.DataFrame([results])
-    # df.to_csv(results_path, mode='a', header=not pd.io.common.file_exists(results_path), index=False)
+    df.to_csv(results_path, mode='a', header=not pd.io.common.file_exists(results_path), index=False)
 
 
 def map_clusters_to_ground_truth(labels_true, labels_pred):
