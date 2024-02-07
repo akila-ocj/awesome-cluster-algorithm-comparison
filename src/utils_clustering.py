@@ -60,6 +60,23 @@ def plot_clusters_fcm(data, labels_pred, centers, title='FCM Clustering Visualiz
     plt.legend()
     plt.show()
 
+
+# Plotting function for CURE clusters
+def plot_clusters_cure(data, labels, title='CURE Clustering Visualization'):
+    plt.figure(figsize=(10, 8))
+    unique_labels = np.unique(labels)
+    colors = plt.cm.viridis(np.linspace(0, 1, len(unique_labels)))
+
+    for k, col in zip(unique_labels, colors):
+        class_member_mask = (labels == k)
+        xy = data[class_member_mask]
+        plt.plot(xy[:, 0], xy[:, 1], 'o', markerfacecolor=col, markeredgecolor='k', markersize=8)
+
+    plt.title(title)
+    plt.xlabel('Feature 1')
+    plt.ylabel('Feature 2')
+    plt.show()
+
 def evaluate_clustering(X, labels_true, labels_pred, clus_algo_name, dataset_name, results_path, algorithm_details, running_time):
     """
     Evaluates the clustering performance using various metrics and saves the results to a CSV file.
