@@ -124,3 +124,16 @@ Timestamp,Dataset,Clustering Algorithm,Accuracy
 2024-02-07 06:24:33.775707,s1,clique_clustering,"intervals: 15, threshold: 35",0.022001981735229492,0.7604
 2024-02-07 06:24:44.947684,s1,clique_clustering,"intervals: 15, threshold: 30",0.15893864631652832,0.7932
 2024-02-07 12:51:50.708110,s1,rock_clustering,,623.5756180286407,0.0638
+2024-02-07 12:57:17.444392,s1,KMeans_clustering,"{'algorithm': 'lloyd', 'copy_x': True, 'init': 'k-means++', 'max_iter': 300, 'n_clusters': 15, 'n_init': 10, 'random_state': 42, 'tol': 0.0001, 'verbose': 0}",0.044002532958984375,0.9938
+2024-02-07 12:57:28.482182,s1,KMeans_clustering,"{'algorithm': 'lloyd', 'copy_x': True, 'init': 'k-means++', 'max_iter': 300, 'n_clusters': 15, 'n_init': 10, 'random_state': 42, 'tol': 0.0001, 'verbose': 0}",0.039999961853027344,0.9938
+2024-02-07 12:58:53.391652,s1,DBSCAN_clustering,"{'algorithm': 'auto', 'eps': 0.02128, 'leaf_size': 30, 'metric': 'euclidean', 'metric_params': None, 'min_samples': 4, 'n_jobs': None, 'p': None}",0.026999950408935547,0.9658
+2024-02-07 12:59:07.745928,s1,DBSCAN_clustering,"{'algorithm': 'auto', 'eps': 0.02128, 'leaf_size': 30, 'metric': 'euclidean', 'metric_params': None, 'min_samples': 4, 'n_jobs': None, 'p': None}",0.0240023136138916,0.9658
+2024-02-07 13:01:03.549813,s1,AffinityPropagation_clustering,"{'affinity': 'euclidean', 'convergence_iter': 30, 'copy': True, 'damping': 0.9, 'max_iter': 2000, 'preference': -0.46510326286189985, 'random_state': 42, 'verbose': False}",21.865483283996582,0.9936
+2024-02-07 13:02:46.915821,s1,Birch_clustering,"{'branching_factor': 50, 'compute_labels': True, 'copy': True, 'n_clusters': 15, 'threshold': 0.05}",0.039999961853027344,0.9944
+2024-02-07 13:03:47.091634,s1,fcm_clustering,,0.582158088684082,0.9156
+2024-02-07 13:05:13.298434,s1,OPTICS_clustering,"{'algorithm': 'auto', 'cluster_method': 'xi', 'eps': None, 'leaf_size': 30, 'max_eps': inf, 'memory': None, 'metric': 'minkowski', 'metric_params': None, 'min_cluster_size': 0.04, 'min_samples': 40, 'n_jobs': None, 'p': 2, 'predecessor_correction': True, 'xi': 0.001}",1.8380963802337646,0.9852
+2024-02-07 13:06:13.056420,s1,MeanShift_clustering,"{'bandwidth': 0.08459728472101341, 'bin_seeding': False, 'cluster_all': True, 'max_iter': 300, 'min_bin_freq': 1, 'n_jobs': None, 'seeds': None}",4.3884148597717285,0.9938
+2024-02-07 13:07:18.607936,s1,cure_clustering,,0.8947908878326416,0.9926
+2024-02-07 13:08:25.566147,s1,BisectingKMeans_clustering,"{'algorithm': 'lloyd', 'bisecting_strategy': 'biggest_inertia', 'copy_x': True, 'init': 'k-means++', 'max_iter': 300, 'n_clusters': 15, 'n_init': 100, 'random_state': 42, 'tol': 0.0001, 'verbose': 0}",4.873331785202026,0.9814
+2024-02-07 13:09:20.292987,s1,clique_clustering,"intervals: 15, threshold: 30",0.029006004333496094,0.7932
+2024-02-07 13:13:06.832681,s1,HDBSCAN_clustering,"{'algorithm': 'auto', 'allow_single_cluster': False, 'alpha': 1.0, 'cluster_selection_epsilon': 0.0, 'cluster_selection_method': 'eom', 'copy': False, 'leaf_size': 40, 'max_cluster_size': None, 'metric': 'euclidean', 'metric_params': None, 'min_cluster_size': 15, 'min_samples': 13, 'n_jobs': None, 'store_centers': None}",0.12202167510986328,0.9526
