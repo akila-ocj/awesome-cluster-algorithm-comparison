@@ -13,32 +13,24 @@ titled "Some methods for classification and analysis of multivariate observation
 evidencing its widespread adoption and foundational status in the realm of clustering analysis.
 <br>
 <br>
-| Rank | Algorithm Name | Original Paper Name | Cited By | isClusteringAlgorithm | Implementation |
-|------|-----------|----------------------|----------|-----------------------|----------------|
-| 1 | k-means | Some methods for classification and analysis of multivariate observations | 37287 | TRUE |
-sklearn.cluster.KMeans |
-| 2 | DBSCAN | A density-based algorithm for discovering clusters in large spatial databases with noise | 30900 | TRUE |
-sklearn.cluster.DBSCAN |
-| 3 | Affinity Propagation | Clustering by Passing Messages Between Data Points | 7886 | TRUE |
-sklearn.cluster.AffinityPropagation |
-| 3 | BIRCH | an efficient data clustering method for very large databases | 7475 | TRUE | sklearn.cluster.Birch |
-| 4 | Fuzzy C Means | FCM: The fuzzy c-means clustering algorithm | 7462 | TRUE | pyclustering.cluster.fcm.fcm |
-| 5 | OPTICS | OPTICS: Ordering points to identify the clustering structure | 6134 | TRUE | sklearn.cluster.OPTICS |
-| 6 | Mean Shift | Mean shift, mode seeking, and clustering | 5742 | TRUE | sklearn.cluster.MeanShift |
-| 7 | CURE | CURE: An efficient clustering algorithm for large databases | 4175 | TRUE |
-pyclustering.cluster.cure.cure |
-| 8 | bisecting K-Means | A comparison of document clustering techniques | 4094 | TRUE |
-sklearn.cluster.BisectingKMeans |
-| 9 | CLIQUE | Automatic subspace clustering of high dimensional data for data mining applications | 3933 | TRUE |
-pyclustering.cluster.clique.clique |
-| 10 | Ward's hierarchical agglomerative clustering | Ward's hierarchical agglomerative clustering method: which
-algorithms implement Ward's criterion? | 3168 | TRUE | sklearn.cluster.AgglomerativeClustering |
-| 11 | ROCK | ROCK: A robust clustering algorithm for categorical attributes | 2926 | TRUE |
-pyclustering.cluster.rock.rock |
-| 12 | GA | Genetic K-means algorithm | 1851 | TRUE | pyclustering.cluster.ga.ga |
-| 13 | HDBSCAN | hdbscan: Hierarchical density based clustering | 1607 | TRUE | sklearn.cluster.HDBSCAN |
-| 14 | CLARANS | CLARANS: A method for clustering objects for spatial data mining | 1531 | TRUE |
-pyclustering.cluster.clarans.clarans |
+
+| Rank | Algorithm Name                               | Original Paper Name                                                                               | Cited By | isClusteringAlgorithm | Implementation                          |
+|------|----------------------------------------------|---------------------------------------------------------------------------------------------------|----------|-----------------------|-----------------------------------------|
+| 1    | k-means                                      | Some methods for classification and analysis of multivariate observations                         | 37287    | TRUE                  | sklearn.cluster.KMeans                  |
+| 2    | DBSCAN                                       | A density-based algorithm for discovering clusters in large spatial databases with noise          | 30900    | TRUE                  | sklearn.cluster.DBSCAN                  |
+| 3    | Affinity Propagation                         | Clustering by Passing Messages Between Data Points                                                | 7886     | TRUE                  | sklearn.cluster.AffinityPropagation     |
+| 4    | BIRCH                                        | an efficient data clustering method for very large databases                                      | 7475     | TRUE                  | sklearn.cluster.Birch                   |
+| 5    | Fuzzy C Means                                | FCM: The fuzzy c-means clustering algorithm                                                       | 7462     | TRUE                  | pyclustering.cluster.fcm.fcm            |
+| 6    | OPTICS                                       | OPTICS: Ordering points to identify the clustering structure                                      | 6134     | TRUE                  | sklearn.cluster.OPTICS                  |
+| 7    | Mean Shift                                   | Mean shift, mode seeking, and clustering                                                          | 5742     | TRUE                  | sklearn.cluster.MeanShift               |
+| 8    | CURE                                         | CURE: An efficient clustering algorithm for large databases                                       | 4175     | TRUE                  | pyclustering.cluster.cure.cure          |
+| 9    | bisecting K-Means                            | A comparison of document clustering techniques                                                    | 4094     | TRUE                  | sklearn.cluster.BisectingKMeans         |
+| 10   | CLIQUE                                       | Automatic subspace clustering of high dimensional data for data mining applications               | 3933     | TRUE                  | pyclustering.cluster.clique.clique      |
+| 11   | Ward's hierarchical agglomerative clustering | Ward's hierarchical agglomerative clustering method: which algorithms implement Ward's criterion? | 3168     | TRUE                  | sklearn.cluster.AgglomerativeClustering |
+| 12   | ROCK                                         | ROCK: A robust clustering algorithm for categorical attributes                                    | 2926     | TRUE                  | pyclustering.cluster.rock.rock          |
+| 13   | GA                                           | Genetic K-means algorithm                                                                         | 1851     | TRUE                  | pyclustering.cluster.ga.ga              |
+| 14   | HDBSCAN                                      | hdbscan: Hierarchical density based clustering                                                    | 1607     | TRUE                  | sklearn.cluster.HDBSCAN                 |
+| 15   | CLARANS                                      | CLARANS: A method for clustering objects for spatial data mining                                  | 1531     | TRUE                  | pyclustering.cluster.clarans.clarans    |
 
 When evaluating the performance of clustering algorithms, it's essential to select appropriate metrics that align with
 your objectives and the data's nature. This selection process often depends on whether ground truth labels are
