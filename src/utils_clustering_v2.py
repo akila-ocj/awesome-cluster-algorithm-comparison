@@ -5,7 +5,7 @@ from datetime import datetime
 from sklearn.metrics import accuracy_score, confusion_matrix
 import seaborn as sns
 from scipy.optimize import linear_sum_assignment
-
+from sklearn import metrics
 
 def plot_clusters(data, labels_pred, title='Clustering Visualization'):
     """
@@ -77,7 +77,7 @@ def plot_clusters_cure(data, labels, title='CURE Clustering Visualization'):
     plt.ylabel('Feature 2')
     plt.show()
 
-def evaluate_clustering(X, labels_true, labels_pred, clus_algo_name, dataset_name, results_path, algorithm_details, running_time):
+def evaluate_clustering(X, labels_true, labels_pred, clus_algo_name, dataset_name, results_path, algorithm_details, training_time, prediction_time):
     """
     Evaluates the clustering performance using various metrics and saves the results to a CSV file.
 
@@ -93,8 +93,23 @@ def evaluate_clustering(X, labels_true, labels_pred, clus_algo_name, dataset_nam
         'Dataset': dataset_name,
         'Clustering Algorithm': clus_algo_name,
         'Algorithm Details': algorithm_details,
-        'Running Time': running_time,
+        'Training Time': training_time,
+        'Prediction Time': prediction_time,
+        'AMI': metrics.adjusted_mutual_info_score(labels_true, labels_pred),
+        'ARI': metrics.adjusted_rand_score(labels_true, labels_pred),
+        'Calinski-Harabasz Score': metrics.calinski_harabasz_score(X, labels_pred),
+        'Davies-Bouldin Score': metrics.davies_bouldin_score(X, labels_pred),
+        'Completeness Score': metrics.completeness_score(labels_true, labels_pred),
+        'Fowlkes-Mallows Score': metrics.fowlkes_mallows_score(labels_true, labels_pred),
+        'Homogeneity': metrics.homogeneity_score(labels_true, labels_pred),
+        'Completeness': metrics.completeness_score(labels_true, labels_pred),
+        'V-Measure': metrics.v_measure_score(labels_true, labels_pred),
+        'Mutual Information': metrics.mutual_info_score(labels_true, labels_pred),
+        'Normalized Mutual Information': metrics.normalized_mutual_info_score(labels_true, labels_pred),
+        'Rand Score': metrics.rand_score(labels_true, labels_pred),
+        'Silhouette Score': metrics.silhouette_score(X, labels_pred),
         'Accuracy': accuracy_score(labels_true, labels_pred)
+
     }
 
     # # Print results
@@ -221,19 +236,6 @@ def generate_confusion_matrix(labels_true, labels_pred, n_classes):
     plt.ylabel("True Label")
     plt.show()
 
-    # Compute accuracies for each cluster, safely handling division by zero
-    row_sums = np.sum(cm, axis=1)
-    safe_divisor = np.where(row_sums == 0, 1, row_sums)  # Avoid division by zero
-    cluster_accuracies = np.diagonal(cm) / safe_divisor
-
-    # Handling potential division by zero by replacing inf and NaN values with 0
-    cluster_accuracies = np.nan_to_num(cluster_accuracies)  # Replace NaN and inf with 0
-    # print("Each cluster's accuracy indicates how well the clustering algorithm has grouped the data points,")
-    # print("compared to the ground truth labels. Higher accuracy means a closer match to the expected grouping.\n")
-    #
-    # # Print each cluster's accuracy
-    # for i, accuracy in enumerate(cluster_accuracies, start=1):
-    #     print(f"Cluster {i} Accuracy: {accuracy * 100:.2f}%")
 
     # Compute overall accuracy
     overall_accuracy = accuracy_score(labels_true, labels_pred)
