@@ -17,7 +17,7 @@ from scipy.optimize import linear_sum_assignment
 from sklearn import metrics
 import ast
 
-n_iter = 200
+n_iter = 60
 MAJOR_MINOR_VERSION = '1.3'
 
 
@@ -222,12 +222,12 @@ def evaluate_and_log(clustering_model, X_train, X_validate, labels_true, results
                         training_time=training_time, prediction_time=prediction_time)
 
 
-# N_DIMENSIONS = 2
+N_DIMENSIONS = 2
 # N_CLUSTERS = 15
 
 # Exponent value generation technique
 # Generate 20 random exponent values uniformly between -4 and 1 for DBSCAN's eps
-eps_exponents = np.random.uniform(-7, 1, 20000)
+eps_exponents = np.random.uniform(-3, 1, 100)
 eps_values = 10 ** eps_exponents
 
 # For AffinityPropagation's 'preference'
@@ -241,12 +241,12 @@ threshold_values = 10 ** threshold_exponents
 warnings.filterwarnings("ignore")
 current_directory = os.path.join('/opt', 'home', 's3934056')
 DATASET_DIRS = [
-        # 'A-sets',
-        # 'Birch-sets',
-        # 'DIM-sets-high',
+        'A-sets', 
+        'Birch-sets', 
+        'DIM-sets-high', 
         'G2-sets', 
-        # 'S-sets',
-        # 'Unbalance'
+        'S-sets', 
+        'Unbalance'
         ]
 # DATASET_DIRS = ['A-sets']
 
@@ -258,11 +258,11 @@ metrics_file_path = os.path.join(current_directory, 'results', 'metrics')
 
 algorithms = [
         # 'KMeans', 
-        'DBSCAN',
+        # 'DBSCAN', 
         # 'AffinityPropagation', 
         # 'BIRCH', 
         # 'OPTICS',
-        #  'Mean Shift',
+         'Mean Shift',
         # 'AgglomerativeClustering'
         ]
 # algorithms = ['KMeans']
@@ -297,7 +297,6 @@ for algorithm_name in algorithms:
                 data = pd.read_csv(raw_file_path, sep="\s+", header=None, names=['X', 'Y'])
                 # Remove rows with missing values:
                 # data_clean = data.dropna()
-                print(data[1])
                 processed_data = preprocess_data(data)
 
                 # Save the processed data to a CSV file
@@ -317,10 +316,6 @@ for algorithm_name in algorithms:
 
                 # Get the number of clusters form the ground truth
                 N_CLUSTERS = len(set(labels_true))
-                raw_file_path = os.path.join(current_directory, 'data', 'raw', DATASET_DIR, f'{DATASET_FILE_NAME}.txt')
-
-                raw_data = pd.read_csv(raw_file_path)
-                print(len(raw_data))
 
                 hyperparameter_domains = {
                     'KMeans': {
@@ -332,12 +327,12 @@ for algorithm_name in algorithms:
                     },
                     'DBSCAN': {
                         'eps': eps_values,  # Generated eps_values
-                        'min_samples': list(range(5, 100, 5))
+                        'min_samples': [N_DIMENSIONS + 1, 5, 10, 20, 30]
                         # Adjusting to N_DIMENSIONS + 1 based on dimensionality
                     },
                     'AffinityPropagation': {
                         'damping': [0.9],
-                        'preference': [-0.5],
+                        'preference': [-0.5],  
                     },
                     'BIRCH': {
                         'threshold': threshold_values,  # log-scale generated values
@@ -390,16 +385,14 @@ for algorithm_name in algorithms:
 
                 # Read processed data
                 # processed_file_path = rf'data\processed\{DATASET_DIR}\{DATASET_FILE_NAME}.txt'
-                # processed_file_path = os.path.join(current_directory, 'data', 'processed', DATASET_DIR,
-                #                                    f'{DATASET_FILE_NAME}.txt')
-                # processed_data = pd.read_csv(processed_file_path)
+                processed_file_path = os.path.join(current_directory, 'data', 'processed', DATASET_DIR,
+                                                   f'{DATASET_FILE_NAME}.txt')
+                processed_data = pd.read_csv(processed_file_path)
+
+                # # Split the data into train and temp (temp will contain both validate and test)
+                # train_data, temp_data, train_labels, temp_labels = train_test_split(
+                #     processed_data, labels_true, train_size=0.5, random_state=42)
                 #
-
-
-                # Split the data into train and temp (temp will contain both validate and test)
-                train_data, temp_data, train_labels, temp_labels = train_test_split(
-                    processed_data, labels_true, train_size=0.75, random_state=42)
-
                 # # Split the temp data into validate and test
                 # validate_data, test_data, validate_labels, test_labels = train_test_split(
                 #     temp_data, temp_labels, train_size=0.5, random_state=42)

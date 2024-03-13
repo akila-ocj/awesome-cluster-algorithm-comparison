@@ -109,7 +109,7 @@ def evaluate_clustering(X, labels_true, labels_pred, clus_algo_name, dataset_nam
     df.to_csv(results_path, mode='a', header=not pd.io.common.file_exists(results_path), index=False)
 
 
-def map_clusters_to_ground_truth(labels_true, labels_pred):
+def soththimap_clusters_to_ground_truth(labels_true, labels_pred):
     """
     Maps clustering algorithm output to ground truth labels using the Hungarian algorithm.
 
